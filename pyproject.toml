@@ -1,0 +1,18 @@
+[project]
+name = "marshal-stability-tests"
+version = "0.1.0"
+description = "Stability and correctness tests for Python's marshal module"
+requires-python = ">=3.8"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["UP006", "UP007"]
