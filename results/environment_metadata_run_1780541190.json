@@ -1,0 +1,38 @@
+{
+  "run_id": "run_1780541190",
+  "timestamp": "2026-06-04T10:46:30.511345",
+  "python": {
+    "version": "3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)]",
+    "executable": "D:\\study\\\u8f6f\u4ef6\u6d4b\u8bd5\\marshal-stability-tests\\.venv\\Scripts\\python.exe",
+    "version_info": {
+      "major": 3,
+      "minor": 8,
+      "micro": 6,
+      "releaselevel": "final",
+      "serial": 0
+    },
+    "implementation": "CPython"
+  },
+  "platform": {
+    "system": "Windows",
+    "release": "10",
+    "version": "10.0.26100",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "architecture": [
+      "64bit",
+      "WindowsPE"
+    ]
+  },
+  "marshal": {
+    "version": 4
+  },
+  "environment": {
+    "pythonpath": "",
+    "pythonhashseed": "random"
+  },
+  "hardware": {
+    "cpu_count": 20
+  }
+}
