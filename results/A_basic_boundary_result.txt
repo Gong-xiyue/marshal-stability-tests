@@ -1,0 +1,29 @@
+Member: A
+Test group: Basic types and boundary values
+OS: macOS 26.5.1
+Python version: 3.9.6
+marshal.version: 4
+Command:
+pytest tests/test_basic_types.py tests/test_boundaries.py
+
+Result:
+240 passed, 0 failed
+
+Observation:
+Equivalence partitioning: every marshal-supported fundamental type (None,
+Ellipsis, bool, int, float, complex, str, bytes, tuple, list, dict, set,
+frozenset) was represented by multiple values, and each representative produced
+byte-identical output under repeated marshal.dumps in the same process and
+round-tripped back to an equivalent object.
+
+Boundary value analysis: integer encoding boundaries (2**31-1, 2**31, 2**63-1,
+2**63, their negatives, and 10**100), container size boundaries (0, 1, 255, 256,
+1024 elements for list/dict/set), and string/bytes length boundaries (0, 1, 255,
+256, 1024 characters) all passed stability and round-trip checks. Controlled
+large containers (10,000-element list and a nested mixed structure) were also
+stable.
+
+Repeatability: repeated marshal.dumps(obj) of the same object yielded
+byte-for-byte identical bytes in every case.
+
+No instability was observed in this group.
