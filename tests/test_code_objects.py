@@ -140,6 +140,6 @@ class TestStabilityAcrossRuns:
         results = []
         for _ in range(10):
             results.append(marshal.dumps(code_obj))
-            time.sleep(0.01
+            time.sleep(0.01)
         for i, result in enumerate(results[1:], 1):
             assert results[0] == result, f"第 {i} 次结果不同"

@@ -1,0 +1,102 @@
+{
+  "environment": {
+    "python_version": "3.8.6",
+    "implementation": "cpython",
+    "marshal_version": 4,
+    "os": "nt",
+    "platform": "win32"
+  },
+  "stability_results": {
+    "int_small": {
+      "stable": true,
+      "hash": "3c3e5f0b175ca9da4f2e28aaa9b4a9c08f37369cd16d7de1b3901512c5f92e46",
+      "length": 5,
+      "error": null
+    },
+    "int_large": {
+      "stable": true,
+      "hash": "93133aef5016fb3e75f0e91c81f629b6103091b160d1a763b384818a7d0fca79",
+      "length": 19,
+      "error": null
+    },
+    "float_normal": {
+      "stable": true,
+      "hash": "037a6b9a94f0ca478998fdec5255e5fea3e2b966a74496530b4ed56b68ebd5f2",
+      "length": 9,
+      "error": null
+    },
+    "float_nan": {
+      "stable": true,
+      "hash": "c0071368d2b0e5cb29b0995db32ea00ef9a3c215871dbabf0d4146930d1c7196",
+      "length": 9,
+      "error": null
+    },
+    "float_inf": {
+      "stable": true,
+      "hash": "a723a76079a60280dcdb2d7984a2adf4a0874e31b9518b30dfc0cfd9c3b53c54",
+      "length": 9,
+      "error": null
+    },
+    "str_short": {
+      "stable": true,
+      "hash": "f27068260acda9a05a6477f17da12f844bca8f00a8ac15381de59fd1add44945",
+      "length": 7,
+      "error": null
+    },
+    "str_long": {
+      "stable": true,
+      "hash": "de729dab4b232f09bfa69335e3a10b2054e84be6a0e30d2b748708d3a8b7887d",
+      "length": 1005,
+      "error": null
+    },
+    "bytes": {
+      "stable": true,
+      "hash": "08e1a789db692b750161938c99f686491e1c66b411e060d0d6cc38d196133dc8",
+      "length": 14,
+      "error": null
+    },
+    "list": {
+      "stable": true,
+      "hash": "d265c45530fc316e51b56df14a120f274a7c1b58ea6c682189dc09232847ba26",
+      "length": 24,
+      "error": null
+    },
+    "dict": {
+      "stable": true,
+      "hash": "d5ce622b71ede1e96234493180ba00e8b6a33b982fb8a0da4ab7ff63fca41bd0",
+      "length": 26,
+      "error": null
+    },
+    "set": {
+      "stable": true,
+      "hash": "4b2f213e2c113f0d0c45fc734fafe6b3ca32e27e86506bef6c20c0491829b35c",
+      "length": 30,
+      "error": null
+    },
+    "tuple": {
+      "stable": true,
+      "hash": "ceac95749ce0e5edbd709073fcb58b794d6b459f01d13c6ac568d8a43d53f98d",
+      "length": 12,
+      "error": null
+    },
+    "bool": {
+      "stable": true,
+      "hash": "e632b7095b0bf32c260fa4c539e9fd7b852d0de454e9be26f24d0d6f91d069d3",
+      "length": 1,
+      "error": null
+    },
+    "none": {
+      "stable": true,
+      "hash": "8ce86a6ae65d3692e7305e2c58ac62eebd97d3d943e093f577da25c36988246b",
+      "length": 1,
+      "error": null
+    }
+  },
+  "version_results": {
+    "0": "2230668c99fa4a67475efc266be378fe6883b4a876164bd2237a1b44ae1c1fdb",
+    "1": "2230668c99fa4a67475efc266be378fe6883b4a876164bd2237a1b44ae1c1fdb",
+    "2": "2230668c99fa4a67475efc266be378fe6883b4a876164bd2237a1b44ae1c1fdb",
+    "3": "0c1e53e153154784a8700ec3dc49a93eca09db0e52c4b0bbca6c744e41955da6",
+    "4": "647480937ea00c3d8c84f800090798dd935b75fe691bb56f597e143b7f0815ef"
+  }
+}

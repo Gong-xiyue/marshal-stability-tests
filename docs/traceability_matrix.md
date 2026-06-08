@@ -25,7 +25,8 @@
 | Code objects are version-sensitive | `test_code_objects.py` | White-box/documentation-inspired testing | Same-interpreter stability tested; cross-version limitation documented | ⚠️ 1 skipped (feature not available) |
 | Random nested objects should not reveal unexpected failures | `test_fuzzing.py` | Fuzzing/property-based testing | Hypothesis-generated values pass | ✅ Passed |
 | Deeply nested random values should remain stable | `test_fuzzing.py` | Fuzzing/property-based testing | Hypothesis-generated deep structures pass | ✅ Passed |
-| Random values should be stable across marshal versions | `test_fuzzing.py` | Fuzzing/property-based testing | Values tested across version range | ✅ Passed |
+| Different marshal versions may produce different output | `test_fuzzing.py`, `detect_differences.py` | Fuzzing/property-based testing | Version comparison reveals format differences | ❌ Confirmed - versions 0-4 produce different output |
+| Set order may vary across processes due to hash seed | `test_cross_process.py`, `detect_differences.py` | Cross-process testing | Different `PYTHONHASHSEED` values cause different serialization order | ❌ Confirmed - 10 different outputs across 10 processes |
 | Collections of random values should be stable | `test_fuzzing.py` | Fuzzing/property-based testing | Multiple values tested together | ✅ Passed |
 | Serialized bytes should have consistent size | `test_fuzzing.py` | Fuzzing/property-based testing | Byte length consistency verified | ✅ Passed |
 | Extremely deep structures should handle gracefully | `test_fuzzing.py` | Fuzzing/property-based testing | Graceful handling of deep recursion | ✅ Passed |
@@ -36,17 +37,17 @@
 
 ## Test Coverage Summary
 
-| Category | Tests | Passed | Failed | Skipped |
-|---|---|---|---|---|
-| Basic Types | 48 | 48 | 0 | 0 |
-| Boundary Values | 34 | 34 | 0 | 0 |
-| Float Specials | 18 | 18 | 0 | 0 |
-| Collections | 4 | 4 | 0 | 0 |
-| Cross Process | 2 | 2 | 0 | 0 |
-| Recursive | 3 | 3 | 0 | 0 |
-| Code Objects | 3 | 2 | 0 | 1 |
-| **Fuzzing** | **7** | **7** | **0** | **0** |
-| **Total** | **144** | **143** | **0** | **1** |
+| Category | Tests | Passed | Failed | Skipped | Notes |
+|---|---|---|---|---|---|
+| Basic Types | 48 | 48 | 0 | 0 | |
+| Boundary Values | 34 | 34 | 0 | 0 | |
+| Float Specials | 18 | 18 | 0 | 0 | |
+| Collections | 4 | 4 | 0 | 0 | |
+| Cross Process | 2 | 2 | 0 | 0 | |
+| Recursive | 3 | 3 | 0 | 0 | |
+| Code Objects | 3 | 2 | 0 | 1 | Feature not available in Python 3.8 |
+| **Fuzzing** | **9** | **7** | **2** | **0** | 2 tests confirmed instability |
+| **Total** | **146** | **143** | **2** | **1** | |
 
 ---
 

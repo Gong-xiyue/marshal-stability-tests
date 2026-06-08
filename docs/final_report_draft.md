@@ -177,17 +177,17 @@ rather than CPython implementation coverage.
 
 ### 5.1 Test Results Summary
 
-| Category | Tests | Passed | Failed | Skipped |
-|---|---|---|---|---|
-| Basic Types | 48 | 48 | 0 | 0 |
-| Boundary Values | 41 | 41 | 0 | 0 |
-| Float Specials | 21 | 21 | 0 | 0 |
-| Collections | 8 | 8 | 0 | 0 |
-| Cross Process | 2 | 2 | 0 | 0 |
-| Recursive | 3 | 3 | 0 | 0 |
-| Code Objects | 3 | 2 | 0 | 1 |
-| **Fuzzing** | **11** | **11** | **0** | **0** |
-| **Total** | **167** | **166** | **0** | **1** |
+| Category | Tests | Passed | Failed | Skipped | Notes |
+|---|---|---|---|---|---|
+| Basic Types | 48 | 48 | 0 | 0 | |
+| Boundary Values | 41 | 41 | 0 | 0 | |
+| Float Specials | 21 | 21 | 0 | 0 | |
+| Collections | 8 | 8 | 0 | 0 | |
+| Cross Process | 2 | 2 | 0 | 0 | |
+| Recursive | 3 | 3 | 0 | 0 | |
+| Code Objects | 3 | 2 | 0 | 1 | `allow_code` not available in Python 3.8 |
+| **Fuzzing** | **13** | **11** | **2** | **0** | 2 tests confirmed instability |
+| **Total** | **169** | **166** | **2** | **1** | |
 
 ### 5.2 Environment Details
 
@@ -226,13 +226,24 @@ The test suite was executed on the following environment:
    - Mixed type interactions in complex structures
    - Triple value combinations
 
-8. **No Version Differences Detected**: Testing across marshal versions (0-4) did not reveal unexpected output differences for supported types.
+8. **❌ Marshal Version Differences Detected**: Different marshal versions (0-4) produce **different byte output** for the same input. The following types showed version-dependent output:
+   - `int`: versions 0/1/2 differ from 3/4
+   - `str`: all versions (0, 1, 2, 3, 4) produce different output
+   - `list`: versions 0/1/2 differ from 3/4
+   - `dict`: all versions produce different output
+   - `set`: versions 0/1/2 differ from 3/4
+   - `tuple`: all versions produce different output
+   - `bytes`: versions 0/1/2 differ from 3/4
+   - `float`: versions 0/1, 2, and 3/4 produce different output
+   - `complex`: versions 0/1, 2, and 3/4 produce different output
 
-9. **Set Order Consistency**: Within a single process, set and frozenset serialization produces consistent output, indicating that hash randomization does not affect same-process serialization.
+9. **❌ Set Order Instability Across Processes**: Due to `PYTHONHASHSEED` randomization, sets and frozensets produce **different serialization output** across different processes. Testing 10 processes with the same set `{"apple", "banana", "cherry", "date", "elderberry", "fig", "grape"}` produced **10 different byte outputs**. This confirms that set serialization order depends on the hash seed.
 
-10. **Code Object Limitation**: One test was skipped due to `allow_code` feature not being available in Python 3.8. This is a documented limitation.
+10. **Set Order Consistency Within Process**: Within a single process, set and frozenset serialization produces consistent output, indicating that hash randomization does not affect same-process serialization.
 
-11. **Environment Metadata Captured**: The `run_matrix.py` script successfully captured comprehensive environment information for reproducibility.
+11. **Code Object Limitation**: One test was skipped due to `allow_code` feature not being available in Python 3.8. This is a documented limitation.
+
+12. **Environment Metadata Captured**: The `run_matrix.py` script successfully captured comprehensive environment information for reproducibility.
 
 ### 5.4 Test Environment Matrix
 
@@ -264,7 +275,7 @@ value testing, fuzzing, robustness testing, and cross-process experiments.
 
 ### Key Conclusions
 
-1. **Stability**: Python's `marshal` module is generally stable for most common objects within a single interpreter process. Repeated `marshal.dumps()` calls produce identical byte streams.
+1. **Within-Process Stability**: Python's `marshal` module is **stable** for all tested types within a single interpreter process. Repeated `marshal.dumps()` calls produce identical byte streams.
 
 2. **Correctness**: Round-trip serialization (`loads(dumps(x))`) correctly reconstructs values, including special cases like NaN.
 
@@ -272,7 +283,11 @@ value testing, fuzzing, robustness testing, and cross-process experiments.
 
 4. **Environment Traceability**: The environment matrix testing ensures that test results are traceable to specific Python versions, OS configurations, and marshal versions.
 
-5. **Limitations Acknowledged**: As documented, code objects have version-specific limitations, and cross-process hash seed variations can affect set serialization order.
+5. **❌ Version Instability**: Different marshal versions (0-4) produce **different byte output** for the same input. This is a documented behavior but confirms that marshal format is not stable across versions.
+
+6. **❌ Cross-Process Set Instability**: Sets and frozensets produce **different serialization output** across different processes due to `PYTHONHASHSEED` randomization. This means set serialization is not deterministic across processes.
+
+7. **Limitations Acknowledged**: As documented, code objects have version-specific limitations.
 
 ### Recommendations
 
