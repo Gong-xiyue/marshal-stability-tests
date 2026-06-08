@@ -1,0 +1,209 @@
+{
+  "environment": {
+    "python_version": "3.10.0a6",
+    "implementation": "cpython",
+    "marshal_version": 4,
+    "os": "posix",
+    "platform": "darwin",
+    "hash_seed": "random",
+    "machine": "unknown"
+  },
+  "basic_types": {
+    "int_small": {
+      "stable": true,
+      "hash": "3c3e5f0b175ca9da4f2e28aaa9b4a9c08f37369cd16d7de1b3901512c5f92e46",
+      "length": 5
+    },
+    "int_large": {
+      "stable": true,
+      "hash": "93133aef5016fb3e75f0e91c81f629b6103091b160d1a763b384818a7d0fca79",
+      "length": 19
+    },
+    "float_normal": {
+      "stable": true,
+      "hash": "037a6b9a94f0ca478998fdec5255e5fea3e2b966a74496530b4ed56b68ebd5f2",
+      "length": 9
+    },
+    "str_short": {
+      "stable": true,
+      "hash": "f27068260acda9a05a6477f17da12f844bca8f00a8ac15381de59fd1add44945",
+      "length": 7
+    },
+    "str_long": {
+      "stable": true,
+      "hash": "de729dab4b232f09bfa69335e3a10b2054e84be6a0e30d2b748708d3a8b7887d",
+      "length": 1005
+    },
+    "bytes": {
+      "stable": true,
+      "hash": "08e1a789db692b750161938c99f686491e1c66b411e060d0d6cc38d196133dc8",
+      "length": 14
+    },
+    "list_int": {
+      "stable": true,
+      "hash": "c0aef970a4f3c6cca2da777733654ed1198c07fc83f0818383b3934178c95581",
+      "length": 30
+    },
+    "dict_int_keys": {
+      "stable": true,
+      "hash": "9e197240f144bac93ef39e5b52dab7f3126b52505f64ed379edf43ea1b8b486a",
+      "length": 26
+    },
+    "tuple": {
+      "stable": true,
+      "hash": "ceac95749ce0e5edbd709073fcb58b794d6b459f01d13c6ac568d8a43d53f98d",
+      "length": 12
+    },
+    "bool": {
+      "stable": true,
+      "hash": "e632b7095b0bf32c260fa4c539e9fd7b852d0de454e9be26f24d0d6f91d069d3",
+      "length": 1
+    },
+    "none": {
+      "stable": true,
+      "hash": "8ce86a6ae65d3692e7305e2c58ac62eebd97d3d943e093f577da25c36988246b",
+      "length": 1
+    }
+  },
+  "float_specials": {
+    "float_nan": {
+      "stable": true,
+      "hash": "c0071368d2b0e5cb29b0995db32ea00ef9a3c215871dbabf0d4146930d1c7196",
+      "length": 9
+    },
+    "float_inf": {
+      "stable": true,
+      "hash": "a723a76079a60280dcdb2d7984a2adf4a0874e31b9518b30dfc0cfd9c3b53c54",
+      "length": 9
+    },
+    "float_neg_inf": {
+      "stable": true,
+      "hash": "860d99b42a646c71e28db195c6fdd2478e70455cb540732d1204ea023e3fb0cf",
+      "length": 9
+    },
+    "float_neg_zero": {
+      "stable": true,
+      "hash": "61d36befa08b84a6b58ddc977ad118100fb1e244e7be671d6f1e027ba585a163",
+      "length": 9
+    },
+    "float_very_small": {
+      "stable": true,
+      "hash": "c906a01f29be5e4aa4529f278f3cdcb2568a965bb632567329af786157dc1c5f",
+      "length": 9
+    },
+    "float_very_large": {
+      "stable": true,
+      "hash": "0f7e1a38a5d9f75190dc3882b1cdd6e17293bb953366fc567fe659c9dc01ff20",
+      "length": 9
+    }
+  },
+  "set_ordering": {
+    "set_strings_1": {
+      "in_process_stable": true,
+      "hash": "fc7999dfe20a843023e20061ae2b85e331577095dfa1a78d633b5b71a87730d3",
+      "length": 46,
+      "note": "\u8de8\u8fdb\u7a0b\u53ef\u80fd\u4e0d\u540c(\u4f9d\u8d56PYTHONHASHSEED)"
+    },
+    "set_strings_2": {
+      "in_process_stable": true,
+      "hash": "a04e745d6759bf0d08145b7f40368e14fdefd95f7029c53f8b983371af8c1ea2",
+      "length": 23,
+      "note": "\u8de8\u8fdb\u7a0b\u53ef\u80fd\u4e0d\u540c(\u4f9d\u8d56PYTHONHASHSEED)"
+    },
+    "set_strings_3": {
+      "in_process_stable": true,
+      "hash": "a2672db1a1d50b7297a34a9dbbb302b36e472568735d507900bd1a79d27a8faf",
+      "length": 46,
+      "note": "\u8de8\u8fdb\u7a0b\u53ef\u80fd\u4e0d\u540c(\u4f9d\u8d56PYTHONHASHSEED)"
+    }
+  },
+  "code_objects": {
+    "simple_func": {
+      "stable": true,
+      "hash": "cf900282c0e071c8137eaad10e911477d366f9cad1ced3c2124c42617555a226",
+      "length": 189,
+      "note": "\u4e0d\u540c\u5e73\u53f0/\u7248\u672c\u901a\u5e38\u4e0d\u540c"
+    },
+    "complex_func": {
+      "stable": true,
+      "hash": "f546e85a8d6973452f871a7d51db05a84144068efedc537d8d94f469e878362f",
+      "length": 210,
+      "note": "\u4e0d\u540c\u5e73\u53f0/\u7248\u672c\u901a\u5e38\u4e0d\u540c"
+    },
+    "lambda_func": {
+      "stable": true,
+      "hash": "7837ee88378a6f4dc6ba3598947795fce595a26827ef4f2526c6e96f693e2f6c",
+      "length": 185,
+      "note": "\u4e0d\u540c\u5e73\u53f0/\u7248\u672c\u901a\u5e38\u4e0d\u540c"
+    }
+  },
+  "complex_nested": {
+    "nested_with_set": {
+      "stable": true,
+      "hash": "4b7765d4066f8dc9146ec4879da9844d65d1183aa77f8cc65b6c8ee514512885",
+      "length": 70
+    },
+    "nested_with_frozenset": {
+      "stable": true,
+      "hash": "507acda3d81bdd48edb0ef1f4a55953df76c8fa7bc4705f03cd5157b9dcb2d8b",
+      "length": 62
+    },
+    "deep_nested": {
+      "stable": true,
+      "hash": "f1038a8decf42caca5e68e51adce699179e8016f0c01229e7c17c31adbc94bba",
+      "length": 155
+    }
+  },
+  "cross_process_variation": [
+    {
+      "process": 1,
+      "hash": "1dd2d573851b12fce75ae60b2ee82a0d692e2ed40afa2cad7936d9d791d4668b",
+      "bytes_preview": "bc0a000000da056c656d6f6eda03666967da06636865727279da056170706c65"
+    },
+    {
+      "process": 2,
+      "hash": "5eced6899b2f7d66b36dc505ec4eb4c3b77d43690df366323a14140950344113",
+      "bytes_preview": "bc0a000000da056d616e676fda03666967da056c656d6f6eda046b697769da05"
+    },
+    {
+      "process": 3,
+      "hash": "d701f478d23d26ffdf3fc839cc4cfc6a7673d6e87ab340d5e10e6aa353dbd2ee",
+      "bytes_preview": "bc0a000000da06636865727279da03666967da046b697769da056c656d6f6eda"
+    },
+    {
+      "process": 4,
+      "hash": "bb5683c9916633832f739131e2aa8b1bce78068aa731710902af5c2a15965b93",
+      "bytes_preview": "bc0a000000da0a656c6465726265727279da0662616e616e61da056d616e676f"
+    },
+    {
+      "process": 5,
+      "hash": "55ccc45e19ac0c8bfa7acd04d6d126ee6f539c1f49250d68f33f896c5feea027",
+      "bytes_preview": "bc0a000000da056c656d6f6eda056d616e676fda0a656c6465726265727279da"
+    },
+    {
+      "process": 6,
+      "hash": "b562b6fc1b28c94d3dada40a9106d372388cfaeb60f8606fc0f2ea89ed4380a2",
+      "bytes_preview": "bc0a000000da056d616e676fda03666967da046b697769da0662616e616e61da"
+    },
+    {
+      "process": 7,
+      "hash": "7a2fce8db369a014bcdab4a78abbea1c03ff74ee71d4c6422b435541cd4b6cc3",
+      "bytes_preview": "bc0a000000da0464617465da0662616e616e61da046b697769da056c656d6f6e"
+    },
+    {
+      "process": 8,
+      "hash": "4bad7050d424bdf5a7c4f84c5c1e83f644811d97f5227cce551fe4623ffad912",
+      "bytes_preview": "bc0a000000da056772617065da03666967da056c656d6f6eda056170706c65da"
+    },
+    {
+      "process": 9,
+      "hash": "54ccd629b98ebad6135b3a3811da00b92e3fb1a9e7d9eb224862f483924f7133",
+      "bytes_preview": "bc0a000000da06636865727279da0464617465da03666967da0a656c64657262"
+    },
+    {
+      "process": 10,
+      "hash": "a21b9288766e543ea00fd2d5d3a5b91743420053bdeb93538184496d5f2a0200",
+      "bytes_preview": "bc0a000000da0a656c6465726265727279da056772617065da056c656d6f6eda"
+    }
+  ]
+}
