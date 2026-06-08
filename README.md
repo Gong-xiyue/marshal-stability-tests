@@ -91,29 +91,7 @@ This script starts child Python processes with different `PYTHONHASHSEED` values
 and compares the SHA-256 digest of `marshal.dumps(obj)`.
 
 ## Cross-version / cross-platform experiment
-
-### 方法1: 基础跨版本测试
-
-运行 `test_cross_version.py` 测试不同 marshal 版本的输出差异：
-
-```bash
-# Windows
-.\.venv\Scripts\python.exe test_cross_version.py
-
-# macOS / Linux
-python3 test_cross_version.py
-```
-
-**输出文件**: `marshal_test_result_{Python版本}_{平台}.json`
-
-**测试内容**:
-- 基础类型稳定性（int, float, str, list, dict, set, tuple等）
-- 不同 marshal 版本（0-4）的输出差异
-- 环境信息记录（Python版本、OS、marshal版本）
-
----
-
-### 方法2: 增强版跨平台测试（推荐）
+ 增强版跨平台测试
 
 运行 `test_cross_version_enhanced.py` 进行全面测试：
 
@@ -137,8 +115,7 @@ python3 test_cross_version_enhanced.py
 
 ---
 
-### 方法3: 跨平台结果对比
-
+跨平台结果对比
 将不同平台的测试结果文件放到同一目录，然后运行：
 
 ```bash
