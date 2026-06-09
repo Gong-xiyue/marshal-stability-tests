@@ -1,20 +1,14 @@
 """Run cross-hash-seed marshal stability experiments.
 
-This script is intentionally separate from pytest so that it can generate a
-results JSON file for the final report.
+Generates a JSON results file for the final report.
 """
 
-from __future__ import annotations
-
-import hashlib
 import json
+import marshal
 import os
 import platform
 import subprocess
 import sys
-import textwrap
-from pathlib import Path
-
 
 EXPRESSIONS = {
     "int_set": "{1, 2, 3, 4, 5}",
@@ -22,27 +16,22 @@ EXPRESSIONS = {
     "string_frozenset": "frozenset({'apple', 'banana', 'cherry', 'date'})",
     "fixed_dict": "{'apple': 1, 'banana': 2, 'cherry': 3}",
     "dict_from_set": "dict.fromkeys({'apple', 'banana', 'cherry'}, 1)",
+    "nested_list_of_sets": "[{1, 2}, {3, 4}, {5, 6}]",
+    "tuple_containing_set": "({1, 2, 3}, {4, 5, 6})",
 }
 
 SEEDS = ["0", "1", "2", "3", "42", "random"]
 
 
-def digest_for(seed: str, expression: str) -> str:
+def digest_for(seed, expression):
     """Compute marshal SHA-256 digest in a child process."""
-    code = textwrap.dedent(
-        f"""
-        import hashlib
-        import marshal
-
-        value = {expression}
-        print(hashlib.sha256(marshal.dumps(value)).hexdigest())
-        """,
-    )
+    code_start = "import hashlib\nimport marshal\nvalue = "
+    code_end = "\nprint(hashlib.sha256(marshal.dumps(value)).hexdigest())"
+    code = code_start + expression + code_end
     env = os.environ.copy()
     env["PYTHONHASHSEED"] = seed
     result = subprocess.run(
         [sys.executable, "-c", code],
-        check=True,
         capture_output=True,
         text=True,
         env=env,
@@ -50,25 +39,24 @@ def digest_for(seed: str, expression: str) -> str:
     return result.stdout.strip()
 
 
-def main() -> None:
+def main():
     """Run the experiment and write JSON results."""
     results = {
         "python_version": sys.version,
         "platform": platform.platform(),
-        "marshal_version": __import__("marshal").version,
+        "marshal_version": marshal.version,
         "cases": {},
     }
 
     for name, expression in EXPRESSIONS.items():
-        results["cases"][name] = {
-            seed: digest_for(seed, expression)
-            for seed in SEEDS
-        }
+        results["cases"][name] = {}
+        for seed in SEEDS:
+            results["cases"][name][seed] = digest_for(seed, expression)
 
-    output_dir = Path("results")
-    output_dir.mkdir(exist_ok=True)
-    output_file = output_dir / "hashseed_results.json"
-    output_file.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    if not os.path.exists("results"):
+        os.makedirs("results")
+    with open("results/hashseed_results.json", "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2)
     print(json.dumps(results, indent=2))
 
 

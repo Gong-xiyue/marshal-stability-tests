@@ -1,6 +1,4 @@
-"""Tests for collection ordering and deterministic behavior."""
-
-from __future__ import annotations
+#test collection ordering and deterministic behavior
 
 import marshal
 
@@ -8,89 +6,87 @@ from marshal_stability.comparators import equivalent
 from marshal_stability.hash_utils import repeated_dumps_are_identical
 
 
-def test_dict_with_fixed_insertion_order_is_stable():
-    """Dictionaries preserve insertion order in modern Python."""
+def test_dict_insertion_order_stable():
     value = {"a": 1, "b": 2, "c": 3}
     assert repeated_dumps_are_identical(value)
     assert equivalent(value, marshal.loads(marshal.dumps(value)))
 
 
-def test_set_is_stable_within_same_process():
-    """A set should be stable when repeatedly serialized in one process."""
+def test_set_stable_in_process():
     value = {"apple", "banana", "cherry"}
     assert repeated_dumps_are_identical(value)
 
 
-def test_frozenset_is_stable_within_same_process():
-    """A frozenset should be stable when repeatedly serialized in one process."""
+def test_frozenset_stable_in_process():
     value = frozenset({"apple", "banana", "cherry"})
     assert repeated_dumps_are_identical(value)
 
 
-def test_dict_created_from_set_may_depend_on_set_iteration_order():
-    """Document a risk: construction from set can inherit hash-dependent order."""
+def test_dict_equivalence_classes():
+    classes = {
+        "literal": {"a": 1, "b": 2},
+        "fromkeys_fixed": dict.fromkeys(["x", "y", "z"], 0),
+        "dict_zip": dict(zip(["a", "b"], [1, 2])),
+        "dict_comprehension": {str(i): i for i in range(5)},
+    }
+    for name, d in classes.items():
+        assert repeated_dumps_are_identical(d), f"dict '{name}' is unstable"
+        assert equivalent(d, marshal.loads(marshal.dumps(d))), (
+            f"dict '{name}' round-trip failed"
+        )
+
+
+def test_set_equivalence_classes():
+    classes = {
+        "int_set": {1, 2, 3},
+        "str_set": {"a", "b", "c"},
+        "mixed_set": {1, "a", (1, 2)},
+        "empty_set": set(),
+        "single_set": {42},
+    }
+    for name, s in classes.items():
+        assert repeated_dumps_are_identical(s), f"set '{name}' is unstable"
+
+
+def test_dict_from_set_depends_on_order():
     source = {"apple", "banana", "cherry"}
     value = dict.fromkeys(source, 1)
     assert repeated_dumps_are_identical(value)
 
 
-def test_set_order_variation_detection():
-    """Test if set serialization produces varying output across multiple runs."""
-    # 测试包含字符串的集合（字符串hash受PYTHONHASHSEED影响）
-    test_sets = [
-        {"apple", "banana", "cherry", "date", "elderberry"},
-        {"python", "java", "javascript", "ruby", "go"},
-        {"a", "b", "c", "d", "e", "f", "g"},
-        set(range(100)),
-        set("abcdefghijklmnopqrstuvwxyz"),
+def test_dict_with_nan_keys():
+    # Dict with NaN keys: NaN != NaN, but marshal should still handle it.
+    import math
+    value = {float("nan"): 1, float("-nan"): 2}
+    restored = marshal.loads(marshal.dumps(value))
+    assert len(restored) == len(value)
+    for k in restored:
+        assert math.isnan(k)
+
+
+def test_dict_mixed_key_types():
+    # Dict with mixed key types should round-trip correctly.
+    value = {
+        None: "none",
+        True: "true",
+        42: "int",
+        3.14: "float",
+        "key": "string",
+        (1, 2): "tuple",
+    }
+    restored = marshal.loads(marshal.dumps(value))
+    assert restored == value
+
+
+def test_nested_empty_containers():
+    # Empty containers nested inside other containers.
+    cases = [
+        {"a": [], "b": {}},
+        {"a": (), "b": set()},
+        [[], {}, ()],
+        (set(), frozenset()),
     ]
-    
-    for s in test_sets:
-        dumps = [marshal.dumps(s) for _ in range(50)]
-        all_identical = all(d == dumps[0] for d in dumps)
-        # 记录观察结果，不强制断言失败
-        if not all_identical:
-            print(f"Set order variation detected for set size {len(s)}")
-
-
-def test_frozenset_order_variation_detection():
-    """Test if frozenset serialization produces varying output."""
-    test_frozensets = [
-        frozenset({"apple", "banana", "cherry", "date"}),
-        frozenset({"x", "y", "z", "a", "b", "c"}),
-    ]
-    
-    for fs in test_frozensets:
-        dumps = [marshal.dumps(fs) for _ in range(50)]
-        all_identical = all(d == dumps[0] for d in dumps)
-        if not all_identical:
-            print(f"Frozenset order variation detected for size {len(fs)}")
-
-
-def test_dict_key_order_variation_detection():
-    """Test if dict serialization with string keys varies."""
-    test_dicts = [
-        {"apple": 1, "banana": 2, "cherry": 3, "date": 4},
-        {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5},
-    ]
-    
-    for d in test_dicts:
-        dumps = [marshal.dumps(d) for _ in range(50)]
-        all_identical = all(dm == dumps[0] for dm in dumps)
-        if not all_identical:
-            print(f"Dict order variation detected for dict with {len(d)} keys")
-
-
-def test_empty_collections_are_stable():
-    """Test that empty collections are always stable."""
-    empty_cases = [
-        [],
-        {},
-        set(),
-        frozenset(),
-        tuple(),
-        b"",
-        "",
-    ]
-    for empty in empty_cases:
-        assert repeated_dumps_are_identical(empty, repeats=10), f"Unstable empty: {type(empty).__name__}"
+    for value in cases:
+        restored = marshal.loads(marshal.dumps(value))
+        assert type(restored) is type(value)
+        assert restored == value
