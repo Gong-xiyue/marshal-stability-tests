@@ -1,7 +1,4 @@
-"""Run cross-hash-seed marshal stability experiments.
-
-Generates a JSON results file for the final report.
-"""
+"""Run cross-hash-seed marshal stability experiments."""
 
 import json
 import marshal
@@ -10,7 +7,7 @@ import platform
 import subprocess
 import sys
 
-EXPRESSIONS = {
+CASES = {
     "int_set": "{1, 2, 3, 4, 5}",
     "string_set": "{'apple', 'banana', 'cherry', 'date'}",
     "string_frozenset": "frozenset({'apple', 'banana', 'cherry', 'date'})",
@@ -23,42 +20,22 @@ EXPRESSIONS = {
 SEEDS = ["0", "1", "2", "3", "42", "random"]
 
 
-def digest_for(seed, expression):
-    """Compute marshal SHA-256 digest in a child process."""
-    code_start = "import hashlib\nimport marshal\nvalue = "
-    code_end = "\nprint(hashlib.sha256(marshal.dumps(value)).hexdigest())"
-    code = code_start + expression + code_end
+def digest(seed, expr):
+    code = "import hashlib\nimport marshal\nvalue = " + expr + "\nprint(hashlib.sha256(marshal.dumps(value)).hexdigest())"
     env = os.environ.copy()
     env["PYTHONHASHSEED"] = seed
-    result = subprocess.run(
-        [sys.executable, "-c", code],
-        capture_output=True,
-        text=True,
-        env=env,
-    )
-    return result.stdout.strip()
+    res = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=env)
+    return res.stdout.strip()
 
 
 def main():
-    """Run the experiment and write JSON results."""
-    results = {
-        "python_version": sys.version,
-        "platform": platform.platform(),
-        "marshal_version": marshal.version,
-        "cases": {},
-    }
-
-    for name, expression in EXPRESSIONS.items():
-        results["cases"][name] = {}
-        for seed in SEEDS:
-            results["cases"][name][seed] = digest_for(seed, expression)
-
-    if not os.path.exists("results"):
-        os.makedirs("results")
+    results = {"py": sys.version, "plat": platform.platform(), "mver": marshal.version, "cases": {}}
+    for name, expr in CASES.items():
+        results["cases"][name] = {seed: digest(seed, expr) for seed in SEEDS}
+    os.makedirs("results", exist_ok=True)
     with open("results/hashseed_results.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     print(json.dumps(results, indent=2))
 
 
-if __name__ == "__main__":
-    main()
+main()
