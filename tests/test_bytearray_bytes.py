@@ -6,7 +6,7 @@ Key finding: marshal turns bytearray into bytes after round-trip.
 import marshal
 
 
-def test_bytearray_comes_back_as_bytes():
+def test_ba_to_bytes():
     """BUG: bytearray becomes bytes after marshal round-trip (should stay bytearray)."""
     original = bytearray(b"hello")
     restored = marshal.loads(marshal.dumps(original))
@@ -20,7 +20,7 @@ def test_bytes_stays_bytes():
     assert type(restored) is bytes
 
 
-def test_bytearray_content_survives():
+def test_ba_content():
     """The content of a bytearray survives the round-trip."""
     original = bytearray(b"\x00\x01\x02\xff")
     restored = marshal.loads(marshal.dumps(original))
@@ -75,7 +75,7 @@ def test_bytearray_in_list():
     assert restored == [b"a", b"b"]
 
 
-def test_bytearray_and_bytes_same_type():
+def test_ba_bytes_same_type():
     """bytearray and bytes produce the same first byte."""
     b_first = marshal.dumps(b"X")[0]
     ba_first = marshal.dumps(bytearray(b"X"))[0]
@@ -103,7 +103,7 @@ def test_garbage_data_raises_error():
             pass
 
 
-def test_non_ascii_string_round_trip():
+def test_non_ascii():
     """Non-ASCII strings should survive marshal."""
     for t in ["中文测试", "日本語", "Español"]:
         restored = marshal.loads(marshal.dumps(t))

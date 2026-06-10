@@ -22,7 +22,7 @@ def digest_in_child(seed, expression):
     return result.stdout.strip()
 
 
-def test_int_set_cross_hashseed_is_measured():
+def test_int_set():
     """Integer sets are generally less sensitive to hash seed."""
     digests = {}
     for seed in ["1", "2", "3"]:
@@ -30,7 +30,7 @@ def test_int_set_cross_hashseed_is_measured():
     assert len(set(digests.values())) >= 1
 
 
-def test_string_set_cross_hashseed_is_recorded():
+def test_string_set():
     """Record whether string set digests differ across hash seeds."""
     seeds = ["0", "1", "2", "3", "42", "random"]
     digests = {}
@@ -46,7 +46,7 @@ def test_string_set_cross_hashseed_is_recorded():
         assert d
 
 
-def test_frozenset_cross_hashseed_is_measured():
+def test_fset():
     """Record whether frozenset digests differ across hash seeds."""
     seeds = ["0", "1", "2", "3", "42", "random"]
     digests = {}
@@ -62,7 +62,7 @@ def test_frozenset_cross_hashseed_is_measured():
         assert d
 
 
-def test_dict_from_set_cross_hashseed_is_measured():
+def test_dict_from_set():
     """BUG: dict.fromkeys(set) produces different bytes under different hash seeds."""
     seeds = ["0", "1", "2", "3", "42", "random"]
     digests = {}
